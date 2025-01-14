@@ -625,7 +625,7 @@ impl<'p> Pages<'p> {
     }
 }
 
-impl<'p> Ord for Page<'p> {
+impl Ord for Page<'_> {
     fn cmp(&self, other: &Self) -> Ordering {
         let mut self_paths = self.path.0.split(is_separator);
         let mut other_paths = other.path.0.split(is_separator);
@@ -650,21 +650,21 @@ impl<'p> Ord for Page<'p> {
     }
 }
 
-impl<'p> PartialOrd for Page<'p> {
+impl PartialOrd for Page<'_> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl<'p> PartialEq for Page<'p> {
+impl PartialEq for Page<'_> {
     fn eq(&self, other: &Self) -> bool {
         self.path.0 == other.path.0 && self.slug == other.slug && self.id == other.id
     }
 }
 
-impl<'p> Eq for Page<'p> {}
+impl Eq for Page<'_> {}
 
-impl<'p, 'r> Paginate for PageContext<'p, 'r> {
+impl Paginate for PageContext<'_, '_> {
     #[inline]
     fn paginate(&self, pages: Range<usize>, length: usize, current: usize) -> Self {
         let old = &self.pages;
@@ -731,7 +731,7 @@ fn render_content<E: Encoder>(source: &str, encoder: &mut E) -> Result<(), E::Er
     encoder.write_html(processed)
 }
 
-impl<'p, 'r> Content for PageList<'p, 'r> {
+impl Content for PageList<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         !self.range.is_empty()
@@ -753,7 +753,7 @@ impl<'p, 'r> Content for PageList<'p, 'r> {
     }
 }
 
-impl<'p, 'r> Content for Permalink<'p, 'r> {
+impl Content for Permalink<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         true
@@ -790,7 +790,7 @@ impl<'p, 'r> Content for Permalink<'p, 'r> {
     }
 }
 
-impl<'p, 'r> Content for Pictures<'p, 'r> {
+impl Content for Pictures<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         !self.0.is_empty()
@@ -812,7 +812,7 @@ impl<'p, 'r> Content for Pictures<'p, 'r> {
     }
 }
 
-impl<'p, 'r> Content for PicturePermalink<'p, 'r> {
+impl Content for PicturePermalink<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         true
@@ -853,7 +853,7 @@ impl<'p> Deref for Pages<'p> {
     }
 }
 
-impl<'p> DerefMut for Pages<'p> {
+impl DerefMut for Pages<'_> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }

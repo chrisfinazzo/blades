@@ -65,7 +65,7 @@ pub enum Any<'a> {
     Map(HashMap<&'a str, Any<'a>>),
 }
 
-impl<'a> Content for Ancestors<'a> {
+impl Content for Ancestors<'_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         !self.0.is_empty()
@@ -110,7 +110,7 @@ impl<'a> Content for Ancestors<'a> {
         }
         if previous != 0 {
             section
-                .with(&Segment(&s[previous..], &s))
+                .with(&Segment(&s[previous..], s))
                 .render(encoder)?;
         } else {
             section.with(&Segment(s, s)).render(encoder)?;
@@ -125,7 +125,7 @@ impl AsRef<str> for Ancestors<'_> {
     }
 }
 
-impl<'a> Default for Ancestors<'a> {
+impl Default for Ancestors<'_> {
     #[inline]
     fn default() -> Self {
         Ancestors(Cow::const_str(""))
@@ -153,7 +153,7 @@ fn content_without_paragraphs<E: Encoder>(source: &str, encoder: &mut E) -> Resu
     encoder.write_html(processed)
 }
 
-impl<'a> Content for Any<'a> {
+impl Content for Any<'_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         match self {
@@ -363,7 +363,7 @@ impl<'de> Deserialize<'de> for DateTime {
             {
                 struct FieldVisitor;
 
-                impl<'de> de::Visitor<'de> for FieldVisitor {
+                impl de::Visitor<'_> for FieldVisitor {
                     type Value = ();
 
                     fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

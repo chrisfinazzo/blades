@@ -46,7 +46,7 @@ struct Meta<'p, 'r>(
     #[ramhorns(rename = "site")] &'r Site<'p>,
 );
 
-impl<'p> Meta<'p, '_> {
+impl Meta<'_, '_> {
     #[inline]
     fn render(
         &self,

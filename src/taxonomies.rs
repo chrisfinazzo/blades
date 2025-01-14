@@ -288,7 +288,7 @@ impl<'t, 'r> Taxonomy<'t, 'r> {
     }
 }
 
-impl<'t, 'r> Paginate for TaxKey<'t, 'r> {
+impl Paginate for TaxKey<'_, '_> {
     fn paginate(&self, range: Range<usize>, length: usize, current: usize) -> Self {
         Self {
             pages: &self.pages[range],
@@ -299,7 +299,7 @@ impl<'t, 'r> Paginate for TaxKey<'t, 'r> {
     }
 }
 
-impl<'t, 'r> Content for TaxDict<'t, 'r> {
+impl Content for TaxDict<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         !self.0.is_empty()
@@ -318,7 +318,7 @@ impl<'t, 'r> Content for TaxDict<'t, 'r> {
     }
 }
 
-impl<'t, 'r> Content for TaxonList<'t, 'r> {
+impl Content for TaxonList<'_, '_> {
     #[inline]
     fn is_truthy(&self) -> bool {
         !self.0.is_empty()
@@ -337,7 +337,7 @@ impl<'t, 'r> Content for TaxonList<'t, 'r> {
     }
 }
 
-impl<'s> Deref for Species<'s> {
+impl Deref for Species<'_> {
     type Target = str;
     fn deref(&self) -> &Self::Target {
         self.0.as_ref()
